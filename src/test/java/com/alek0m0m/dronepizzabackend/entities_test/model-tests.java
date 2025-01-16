@@ -82,9 +82,6 @@ class DroneTest {
         assertEquals(station.getId(), drone.getStation().getId());
         assertEquals(station.getDrones().get(0).getId(), drone.getId());
         assertTrue(drone.getStation().getDrones().contains(drone));
-
-        System.out.println("Station: " + station);
-        System.out.println("Drone: " + drone);
         assertTrue(station.getDrones().contains(drone));
     }
 }
