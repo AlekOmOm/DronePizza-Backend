@@ -271,24 +271,6 @@ class DeliveryControllerTest {
                 .andExpect(status().isConflict()); // 409
     }
 
-//    @Test
-//    void finishDelivery_ShouldFail_WhenNoDroneAssigned_withJSON() throws Exception {
-//        // Arrange
-//        when(deliveryService.finishDelivery(1L))
-//                .thenThrow(new DeliveryNotScheduledException("Delivery not scheduled: 1"));
-//
-//        // Act & Assert
-//        mockMvc.perform(post("/deliveries/finish")
-//                        .param("deliveryId", "1")
-//                        .with(csrf())
-//                        .with(user("admin").roles("ADMIN"))
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isConflict())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$.message").value("Delivery not scheduled: 1"));
-//    }
-
     @Test
     void scheduleDelivery_ShouldMaintainConsistency_WhenAssigningDrone() throws Exception {
         // Arrange
