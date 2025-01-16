@@ -46,15 +46,17 @@ class DroneTest {
         testStation = new Station();
         testStation.setLatitude(55.41);
         testStation.setLongitude(12.34);
-        stationRepository.save(testStation);
-        testEntities.withStation(testStation.getId());
+        testStation = stationRepository.save(testStation);
 
         // Create a test drone
         testDrone = new Drone();
         testDrone.setSerialNumber(UUID.randomUUID());
         testDrone.setStatus(Drone.DroneStatus.I_DRIFT);
         testDrone.setStation(testStation);
+        testDrone = droneRepository.save(testDrone);
+
         testEntities.withDrone(testDrone.getId());
+        testEntities.withStation(testStation.getId());
     }
 
     @AfterEach
@@ -65,6 +67,7 @@ class DroneTest {
     @Test
     void testCreateDrone() {
         Drone savedDrone = droneRepository.save(testDrone);
+
         assertNotNull(savedDrone.getId());
         assertEquals(testDrone.getSerialNumber(), savedDrone.getSerialNumber());
         assertEquals(testDrone.getStatus(), savedDrone.getStatus());
@@ -75,9 +78,14 @@ class DroneTest {
 
     @Test
     void testUpdateDroneStatus() {
+        // arrange
         Drone savedDrone = droneRepository.save(testDrone);
+
+        // act
         savedDrone.setStatus(Drone.DroneStatus.UDE_AF_DRIFT);
         Drone updatedDrone = droneRepository.save(savedDrone);
+
+        // assert
         assertEquals(Drone.DroneStatus.UDE_AF_DRIFT, updatedDrone.getStatus());
 
         testEntities.withDrone(updatedDrone.getId());
