@@ -1,7 +1,7 @@
-package com.alek0m0m.dronepizzabackend.drone;
+package com.alek0m0m.dronepizzabackend.domains.drone;
 
-import com.alek0m0m.dronepizzabackend.delivery.Delivery;
-import com.alek0m0m.dronepizzabackend.station.Station;
+import com.alek0m0m.dronepizzabackend.domains.delivery.Delivery;
+import com.alek0m0m.dronepizzabackend.domains.station.Station;
 import jakarta.persistence.*;
 import lombok.ToString;
 

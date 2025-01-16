@@ -1,4 +1,4 @@
-package com.alek0m0m.dronepizzabackend.pizza;
+package com.alek0m0m.dronepizzabackend.domains.pizza;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

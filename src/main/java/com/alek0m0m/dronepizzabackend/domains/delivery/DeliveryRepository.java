@@ -1,6 +1,6 @@
-package com.alek0m0m.dronepizzabackend.delivery;
+package com.alek0m0m.dronepizzabackend.domains.delivery;
 
-import com.alek0m0m.dronepizzabackend.drone.Drone;
+import com.alek0m0m.dronepizzabackend.domains.drone.Drone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,7 +1,7 @@
-package com.alek0m0m.dronepizzabackend.delivery;
+package com.alek0m0m.dronepizzabackend.domains.delivery;
 
-import com.alek0m0m.dronepizzabackend.drone.DroneDTO;
-import com.alek0m0m.dronepizzabackend.pizza.PizzaDTO;
+import com.alek0m0m.dronepizzabackend.domains.drone.DroneDTO;
+import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaDTO;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

@@ -1,12 +1,9 @@
-package com.alek0m0m.dronepizzabackend.pizza;
+package com.alek0m0m.dronepizzabackend.domains.pizza;
 
 
-import com.alek0m0m.dronepizzabackend.delivery.Delivery;
+import com.alek0m0m.dronepizzabackend.domains.delivery.Delivery;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 

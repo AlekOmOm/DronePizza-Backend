@@ -1,10 +1,16 @@
 
 package com.alek0m0m.dronepizzabackend.services_tests;
 
-import com.alek0m0m.dronepizzabackend.delivery.*;
-import com.alek0m0m.dronepizzabackend.drone.*;
-import com.alek0m0m.dronepizzabackend.pizza.*;
-import com.alek0m0m.dronepizzabackend.station.*;
+import com.alek0m0m.dronepizzabackend.domains.delivery.Delivery;
+import com.alek0m0m.dronepizzabackend.domains.delivery.DeliveryDTO;
+import com.alek0m0m.dronepizzabackend.domains.delivery.DeliveryRepository;
+import com.alek0m0m.dronepizzabackend.domains.delivery.DeliveryService;
+import com.alek0m0m.dronepizzabackend.domains.drone.*;
+import com.alek0m0m.dronepizzabackend.domains.pizza.Pizza;
+import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaRepository;
+import com.alek0m0m.dronepizzabackend.domains.station.Station;
+import com.alek0m0m.dronepizzabackend.domains.station.StationRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

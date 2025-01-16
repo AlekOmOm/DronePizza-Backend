@@ -1,9 +1,9 @@
-package com.alek0m0m.dronepizzabackend.drone;
+package com.alek0m0m.dronepizzabackend.domains.drone;
 
 
-import com.alek0m0m.dronepizzabackend.station.Station;
-import com.alek0m0m.dronepizzabackend.station.StationDTO;
-import com.alek0m0m.dronepizzabackend.station.StationRepository;
+import com.alek0m0m.dronepizzabackend.domains.station.Station;
+import com.alek0m0m.dronepizzabackend.domains.station.StationDTO;
+import com.alek0m0m.dronepizzabackend.domains.station.StationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

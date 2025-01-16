@@ -1,8 +1,8 @@
-package com.alek0m0m.dronepizzabackend.delivery;
+package com.alek0m0m.dronepizzabackend.domains.delivery;
 
 
-import com.alek0m0m.dronepizzabackend.drone.Drone;
-import com.alek0m0m.dronepizzabackend.pizza.Pizza;
+import com.alek0m0m.dronepizzabackend.domains.drone.Drone;
+import com.alek0m0m.dronepizzabackend.domains.pizza.Pizza;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -58,8 +58,6 @@ public class Delivery {
         this.drone = null;
         return this;
     }
-
-
 
 
     // Constructors

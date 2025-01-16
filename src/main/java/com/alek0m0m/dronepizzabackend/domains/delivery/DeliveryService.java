@@ -1,7 +1,10 @@
-package com.alek0m0m.dronepizzabackend.delivery;
+package com.alek0m0m.dronepizzabackend.domains.delivery;
 
-import com.alek0m0m.dronepizzabackend.drone.*;
-import com.alek0m0m.dronepizzabackend.pizza.*;
+import com.alek0m0m.dronepizzabackend.domains.drone.*;
+import com.alek0m0m.dronepizzabackend.domains.pizza.Pizza;
+import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaDTO;
+import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaNotFoundException;
+import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.alek0m0m.dronepizzabackend.pizza;
+package com.alek0m0m.dronepizzabackend.domains.pizza;
 
 public class PizzaNotFoundException extends RuntimeException {
     public PizzaNotFoundException(String message) {

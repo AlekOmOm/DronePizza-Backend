@@ -1,4 +1,4 @@
-package com.alek0m0m.dronepizzabackend.pizza;
+package com.alek0m0m.dronepizzabackend.domains.pizza;
 
 import java.util.Objects;
 

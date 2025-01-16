@@ -1,6 +1,6 @@
-package com.alek0m0m.dronepizzabackend.drone;
+package com.alek0m0m.dronepizzabackend.domains.drone;
 
-import com.alek0m0m.dronepizzabackend.station.StationDTO;
+import com.alek0m0m.dronepizzabackend.domains.station.StationDTO;
 import java.util.Objects;
 import java.util.UUID;
 

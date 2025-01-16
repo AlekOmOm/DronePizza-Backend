@@ -1,6 +1,6 @@
-package com.alek0m0m.dronepizzabackend.station;
+package com.alek0m0m.dronepizzabackend.domains.station;
 
-import com.alek0m0m.dronepizzabackend.drone.Drone;
+import com.alek0m0m.dronepizzabackend.domains.drone.Drone;
 import jakarta.persistence.*;
 import lombok.*;
 

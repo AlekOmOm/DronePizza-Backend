@@ -1,4 +1,4 @@
-package com.alek0m0m.dronepizzabackend.station;
+package com.alek0m0m.dronepizzabackend.domains.station;
 
 import java.util.Objects;
 
