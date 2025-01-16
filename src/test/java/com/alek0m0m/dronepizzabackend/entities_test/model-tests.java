@@ -1,5 +1,6 @@
 package com.alek0m0m.dronepizzabackend.entities_test;
 
+import com.alek0m0m.dronepizzabackend.TestDatabaseHelper;
 import com.alek0m0m.dronepizzabackend.domains.delivery.Delivery;
 import com.alek0m0m.dronepizzabackend.domains.delivery.DeliveryRepository;
 import com.alek0m0m.dronepizzabackend.domains.drone.Drone;
@@ -9,6 +10,7 @@ import com.alek0m0m.dronepizzabackend.domains.pizza.PizzaRepository;
 import com.alek0m0m.dronepizzabackend.domains.station.Station;
 import com.alek0m0m.dronepizzabackend.domains.station.StationRepository;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +31,35 @@ class DroneTest {
     @Autowired
     private StationRepository stationRepository;
 
+    @Autowired
+    private TestDatabaseHelper dbHelper;
+    private TestDatabaseHelper.TestEntities testEntities;
+
     private Station testStation;
     private Drone testDrone;
 
     @BeforeEach
     void setUp() {
+        testEntities = new TestDatabaseHelper.TestEntities();
+
         // Create a test station
         testStation = new Station();
         testStation.setLatitude(55.41);
         testStation.setLongitude(12.34);
         stationRepository.save(testStation);
+        testEntities.withStation(testStation.getId());
 
         // Create a test drone
         testDrone = new Drone();
         testDrone.setSerialNumber(UUID.randomUUID());
         testDrone.setStatus(Drone.DroneStatus.I_DRIFT);
         testDrone.setStation(testStation);
+        testEntities.withDrone(testDrone.getId());
+    }
+
+    @AfterEach
+    void tearDown() {
+        dbHelper.cleanupTestEntities(testEntities);
     }
 
     @Test
@@ -54,6 +69,8 @@ class DroneTest {
         assertEquals(testDrone.getSerialNumber(), savedDrone.getSerialNumber());
         assertEquals(testDrone.getStatus(), savedDrone.getStatus());
         assertEquals(testStation.getId(), savedDrone.getStation().getId());
+
+        testEntities.withDrone(savedDrone.getId());
     }
 
     @Test
@@ -62,6 +79,8 @@ class DroneTest {
         savedDrone.setStatus(Drone.DroneStatus.UDE_AF_DRIFT);
         Drone updatedDrone = droneRepository.save(savedDrone);
         assertEquals(Drone.DroneStatus.UDE_AF_DRIFT, updatedDrone.getStatus());
+
+        testEntities.withDrone(updatedDrone.getId());
     }
 
     @Test
@@ -88,6 +107,10 @@ class DroneTest {
         assertEquals(station.getDrones().get(0).getId(), drone.getId());
         assertTrue(drone.getStation().getDrones().contains(drone));
         assertTrue(station.getDrones().contains(drone));
+
+
+        testEntities.withDrone(drone.getId());
+        testEntities.withStation(station.getId());
     }
 }
 
@@ -99,8 +122,15 @@ class StationTest {
 
     private Station testStation;
 
+    @Autowired
+    private TestDatabaseHelper dbHelper;
+    private TestDatabaseHelper.TestEntities testEntities;
+
+
     @BeforeEach
     void setUp() {
+        testEntities = new TestDatabaseHelper.TestEntities();
+
         testStation = new Station();
         testStation.setLatitude(55.41);
         testStation.setLongitude(12.34);
@@ -112,6 +142,8 @@ class StationTest {
         assertNotNull(savedStation.getId());
         assertEquals(testStation.getLatitude(), savedStation.getLatitude());
         assertEquals(testStation.getLongitude(), savedStation.getLongitude());
+
+        testEntities.withStation(savedStation.getId());
     }
 
     @Test
@@ -119,12 +151,19 @@ class StationTest {
         Station savedStation = stationRepository.save(testStation);
         assertEquals(55.41, savedStation.getLatitude(), 0.001);
         assertEquals(12.34, savedStation.getLongitude(), 0.001);
+
+        testEntities.withStation(savedStation.getId());
     }
 }
 
 // PizzaTest.java
 @SpringBootTest
 class PizzaTest {
+
+    @Autowired
+    private TestDatabaseHelper dbHelper;
+    private TestDatabaseHelper.TestEntities testEntities;
+
     @Autowired
     private PizzaRepository pizzaRepository;
 
@@ -132,10 +171,18 @@ class PizzaTest {
 
     @BeforeEach
     void setUp() {
+        testEntities = new TestDatabaseHelper.TestEntities();
+
         testPizza = new Pizza();
         testPizza.setTitle("Margherita");
         testPizza.setPriceInDKK(85);
     }
+
+    @AfterEach
+    void tearDown() {
+        dbHelper.cleanupTestEntities(testEntities);
+    }
+
 
     @Test
     void testCreatePizza() {
@@ -143,6 +190,8 @@ class PizzaTest {
         assertNotNull(savedPizza.getId());
         assertEquals(testPizza.getTitle(), savedPizza.getTitle());
         assertEquals(testPizza.getPriceInDKK(), savedPizza.getPriceInDKK());
+
+        testEntities.withPizza(savedPizza.getId());
     }
 
     @Test
@@ -150,12 +199,17 @@ class PizzaTest {
         Pizza savedPizza = pizzaRepository.save(testPizza);
         assertTrue(savedPizza.getPriceInDKK() > 0);
         assertEquals(Integer.class, savedPizza.getPriceInDKK().getClass());
+
+        testEntities.withPizza(savedPizza.getId());
     }
 }
 
 // DeliveryTest.java
 @SpringBootTest
 class DeliveryTest {
+    @Autowired
+    private TestDatabaseHelper dbHelper;
+
     @Autowired
     private DeliveryRepository deliveryRepository;
     
@@ -168,44 +222,61 @@ class DeliveryTest {
     @Autowired
     private StationRepository stationRepository;
 
+    private TestDatabaseHelper.TestEntities testEntities;
+
     private Delivery testDelivery;
+    private Station testStation;
     private Pizza testPizza;
     private Drone testDrone;
 
     @BeforeEach
     void setUp() {
+        testEntities = new TestDatabaseHelper.TestEntities();
+
         // Create test pizza
         testPizza = new Pizza();
         testPizza.setTitle("Margherita");
         testPizza.setPriceInDKK(85);
-        pizzaRepository.save(testPizza);
+        Pizza savedPizza = pizzaRepository.save(testPizza);
+        testEntities.withPizza(savedPizza.getId());
 
-        // Create test station and drone
-        Station testStation = new Station();
+        testStation = new Station();
         testStation.setLatitude(55.41);
         testStation.setLongitude(12.34);
         stationRepository.save(testStation);
+        testEntities.withStation(testStation.getId());
 
         testDrone = new Drone();
         testDrone.setSerialNumber(UUID.randomUUID());
         testDrone.setStatus(Drone.DroneStatus.I_DRIFT);
         testDrone.setStation(testStation);
         droneRepository.save(testDrone);
+        testEntities.withDrone(testDrone.getId());
 
         // Create test delivery
         testDelivery = new Delivery();
         testDelivery.setExpectedDeliveryTime(LocalDateTime.now().plusMinutes(30));
         testDelivery.setDeliveryAddress("Guldbergsgade 29N, 2200 København");
         testDelivery.setPizza(testPizza);
+        deliveryRepository.save(testDelivery);
+        testEntities.withDelivery(testDelivery.getId());
+    }
+
+    @AfterEach
+    void tearDown() {
+        dbHelper.cleanupTestEntities(testEntities);
     }
 
     @Test
     void testCreateDelivery() {
         Delivery savedDelivery = deliveryRepository.save(testDelivery);
+
         assertNotNull(savedDelivery.getId());
         assertEquals(testDelivery.getExpectedDeliveryTime(), savedDelivery.getExpectedDeliveryTime());
         assertEquals(testDelivery.getDeliveryAddress(), savedDelivery.getDeliveryAddress());
         assertNull(savedDelivery.getActualDeliveryTime());
+
+        testEntities.withDelivery(savedDelivery.getId());
     }
 
     @Test
@@ -214,14 +285,19 @@ class DeliveryTest {
         Delivery savedDelivery = deliveryRepository.save(testDelivery);
         assertNotNull(savedDelivery.getDrone());
         assertEquals(testDrone.getId(), savedDelivery.getDrone().getId());
+
+        testEntities.withDelivery(savedDelivery.getId());
     }
 
     @Test
     void testCompleteDelivery() {
         Delivery savedDelivery = deliveryRepository.save(testDelivery);
+
         LocalDateTime completionTime = LocalDateTime.now();
         savedDelivery.setActualDeliveryTime(completionTime);
         Delivery completedDelivery = deliveryRepository.save(savedDelivery);
         assertNotNull(completedDelivery.getActualDeliveryTime());
+
+        testEntities.withDelivery(completedDelivery.getId());
     }
 }
