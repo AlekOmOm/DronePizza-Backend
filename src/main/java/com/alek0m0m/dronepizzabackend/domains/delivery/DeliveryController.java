@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-import com.alek0m0m.dronepizzabackend.domains.ErrorResponse;
-
 import java.util.List;
 import java.util.UUID;
 
