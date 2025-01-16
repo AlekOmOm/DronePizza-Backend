@@ -126,7 +126,6 @@ class StationTest {
     private TestDatabaseHelper dbHelper;
     private TestDatabaseHelper.TestEntities testEntities;
 
-
     @BeforeEach
     void setUp() {
         testEntities = new TestDatabaseHelper.TestEntities();
@@ -134,6 +133,11 @@ class StationTest {
         testStation = new Station();
         testStation.setLatitude(55.41);
         testStation.setLongitude(12.34);
+    }
+
+    @AfterEach
+    void tearDown() {
+        dbHelper.cleanupTestEntities(testEntities);
     }
 
     @Test
