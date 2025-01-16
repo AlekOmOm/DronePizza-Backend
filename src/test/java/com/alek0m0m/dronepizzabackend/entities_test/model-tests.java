@@ -1,9 +1,9 @@
 package com.alek0m0m.dronepizzabackend.entities_test;
 
-import com.alek0m0m.dronepizzabackend.delivery.Delivery;
-import com.alek0m0m.dronepizzabackend.drone.Drone;
-import com.alek0m0m.dronepizzabackend.pizza.Pizza;
-import com.alek0m0m.dronepizzabackend.station.Station;
+import com.alek0m0m.dronepizzabackend.delivery.*;
+import com.alek0m0m.dronepizzabackend.drone.*;
+import com.alek0m0m.dronepizzabackend.pizza.*;
+import com.alek0m0m.dronepizzabackend.station.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,10 +61,31 @@ class DroneTest {
 
     @Test
     void testDroneStationRelationship() {
-        Drone savedDrone = droneRepository.save(testDrone);
-        Station associatedStation = savedDrone.getStation();
-        assertNotNull(associatedStation);
-        assertTrue(associatedStation.getDrones().contains(savedDrone));
+        Station station = new Station()
+            .setLatitude(55.41)
+            .setLongitude(12.34);
+        station = stationRepository.save(station);
+
+
+        Drone drone = new Drone()
+            .setSerialNumber(UUID.randomUUID())
+            .setStatus(Drone.DroneStatus.I_DRIFT);
+
+        // Add drone to station: establishes connection
+            // adds to drones of station and calls drone.setStation(station)
+        station.addDrone(drone);
+        drone = droneRepository.save(drone);
+
+        // even with EAGER loading, we need a fresh copy after save
+        station = stationRepository.findById(station.getId()).orElseThrow();
+
+        assertEquals(station.getId(), drone.getStation().getId());
+        assertEquals(station.getDrones().get(0).getId(), drone.getId());
+        assertTrue(drone.getStation().getDrones().contains(drone));
+
+        System.out.println("Station: " + station);
+        System.out.println("Drone: " + drone);
+        assertTrue(station.getDrones().contains(drone));
     }
 }
 
@@ -140,6 +162,9 @@ class DeliveryTest {
     
     @Autowired
     private PizzaRepository pizzaRepository;
+
+    @Autowired
+    private StationRepository stationRepository;
 
     private Delivery testDelivery;
     private Pizza testPizza;

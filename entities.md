@@ -1,5 +1,5 @@
 
-# Entities with JPA
+## Entities with JPA
 
 1. Relations:
     - Used @ManyToOne for child side (Drone → Station, Delivery → Drone, Delivery → Pizza)
@@ -21,3 +21,37 @@
 4. Collections:
     - Initialized empty ArrayList for all @OneToMany collections
     - This prevents null pointer exceptions
+
+
+### Relations and Fetch Strategies
+
+1. Parent-Child relations:
+   - Station is parent, Drone is child
+   - Delivery is parent, Drone and Pizza are children
+   
+   - Drone is optional in Delivery
+   - Station is required in Drone
+
+2. UML relation types:
+    - Station -**_aggregation_**→ Drone
+      - station is responsible for drones, but can exist without
+      - Drone entity on the other hand *MUST* have a station
+        - `@JoinColumn(name = "station_id", nullable = false)`
+    - Delivery -composition→ Drone
+    - Delivery -composition→ Pizza
+
+3. Bi-Directional relations
+    - Station has OneToMany Drones (mappedBy)
+      - Station -one-many→ Drone
+    - Drone has ManyToOne Station
+      - Drone -many-one→ Station
+   similar with:
+    - Delivery → Drone
+    - Delivery → Pizza
+
+
+
+
+explanation and consequence with Station and Drone as examples:
+    
+
