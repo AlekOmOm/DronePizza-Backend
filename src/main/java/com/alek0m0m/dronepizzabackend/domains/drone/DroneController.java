@@ -34,7 +34,7 @@ public class DroneController {
         }
     }
 
-    @PostMapping("/enable")
+    @PostMapping("/enable") // POST /drones/enable?serialNumber=123
     public ResponseEntity<DroneDTO> enableDrone(@RequestParam UUID serialNumber) {
         try {
             return ResponseEntity.ok(droneService.enableDrone(serialNumber));

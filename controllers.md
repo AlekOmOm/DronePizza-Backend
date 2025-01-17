@@ -5,15 +5,22 @@ Key points about the controllers:
     - GET / - List all drones
     - POST /add - Create new drone
     - POST /enable - Enable drone
+      - `/drones/enable?serialNumber=123`
     - POST /disable - Disable drone
+      - `/drones/disable?serialNumber=123`
     - POST /retire - Retire drone
-
+      - `/drones/retire?serialNumber=123`
+   note:
+    - JSON body response of /drones, doesn't have id, but instead SerialNumber (UUID)
+   
 2. DeliveryController (/deliveries):
     - GET / - List undelivered orders
-    - POST /add - Create new delivery
+    - POST /add?pizzaId=1 - Create new delivery
     - GET /queue - List unassigned deliveries
     - POST /schedule - Assign drone to delivery
+      - `/deliveries/schedule?deliveryId=1&droneSerialNumber=123`
     - POST /finish - Mark delivery as completed
+      - '/deliveries/finish?deliveryId=1'
 
 3. DTOs:
     - Created to separate API representation from entities

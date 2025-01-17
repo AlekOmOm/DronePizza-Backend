@@ -28,7 +28,7 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getUndeliveredOrders());
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add") // POST /deliveries/add?pizzaId=1
     public ResponseEntity<DeliveryDTO> addDelivery(@RequestParam Long pizzaId) {
         try {
             return ResponseEntity.ok(deliveryService.createDelivery(pizzaId));
@@ -42,7 +42,7 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.getUnassignedDeliveries());
     }
 
-    @PostMapping("/schedule")
+    @PostMapping("/schedule") // POST /deliveries/schedule?deliveryId=1&droneSerialNumber=123
     public ResponseEntity<DeliveryDTO> scheduleDelivery(
             @RequestParam Long deliveryId,
             @RequestParam(required = false) UUID droneSerialNumber) {
@@ -58,7 +58,7 @@ public class DeliveryController {
         }
     }
 
-    @PostMapping("/finish")
+    @PostMapping("/finish") // POST /deliveries/finish?deliveryId=1
     public ResponseEntity<DeliveryDTO> finishDelivery(@RequestParam Long deliveryId) { // returns Object, in case of error returns ErrorResponse
         try {
             return ResponseEntity.ok(deliveryService.finishDelivery(deliveryId));

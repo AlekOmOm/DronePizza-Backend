@@ -38,10 +38,10 @@ public class DroneService {
             .findFirst()
             .orElseThrow(() -> new NoStationAvailableException("No stations available"));
 
-        Drone drone = new Drone();
-        drone.setSerialNumber(UUID.randomUUID());
-        drone.setStatus(Drone.DroneStatus.I_DRIFT);
-        drone.setStation(leastLoadedStation);
+        Drone drone = new Drone()
+            .setSerialNumber(UUID.randomUUID())
+            .setStatus(Drone.DroneStatus.I_DRIFT)
+            .setStation(leastLoadedStation);
 
         return convertToDTO(droneRepository.save(drone));
     }
