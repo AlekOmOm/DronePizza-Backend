@@ -23,7 +23,9 @@ public class Delivery {
     @Column(nullable = false)
     private String deliveryAddress;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    // pizza and drone are associated with delivery
+    // many to one relationship, many deliveries can have one pizza i.e. pizza are types of pizzas
+    @ManyToOne(fetch = FetchType.EAGER) // eager fetch type is used to load the associated object immediately
     @JoinColumn(name = "pizza_id", nullable = false)
     private Pizza pizza;
 
